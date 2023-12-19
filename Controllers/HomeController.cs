@@ -88,7 +88,7 @@ namespace visitor_MVC.Controllers
             //}
             if (isLogin)
             {
-                using (OracleConnection SYSINFO = new OracleConnection("Data Source=192.168.3.6:1521/B2BMES;User ID=SYSINFO;Password=SYSINFO"))
+                using (OracleConnection SYSINFO = new OracleConnection("Data Source=***********;User ID=*******;Password=*******"))
                 {
                     SYSINFO.Open();
 
