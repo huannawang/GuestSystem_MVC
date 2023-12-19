@@ -15,7 +15,7 @@ namespace visitor_MVC.Models
 {
     public class DBmanager
     {
-        private readonly string ConnStr = "Data Source=192.168.10.10;Initial Catalog=Guestsys;Persist Security Info=True;User ID=admin;Password=ZAQ!@#xcv";
+        private readonly string ConnStr = "Data Source=**********;Initial Catalog=Guestsys;Persist Security Info=True;User ID=admin;Password=*********";
 
         public class CustomClass
         {
