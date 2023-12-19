@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewBag.Title = "GuardEditGuest";
+    var date = ViewBag.Date;
+}
+@model visitor_MVC.Models.GuestInfoNameViewModel
+
+<h2>GuardEditGuest</h2>
+
+
+
+<form method="post" action="/Home/GuardEditGuest" onsubmit="return confirm('請確認資料正確，送出後無法修改。')">
+    <div class="form-group row">
+        <label for="OrderNo" class="col-sm-2">單號</label>
+        <div class="col-sm-10">
+            <input type="text" id="OrderNo" name="GuestInfo.OrderNo" class="form-control" value="@Model.GuestInfo.OrderNo" readonly />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="ETA" class="col-sm-2">日期</label>
+        <div class="col-sm-10">
+            <label id="ETA" name="GuestInfo.ETA">@Model.GuestInfo.ETA.ToString("yyyy-MM-dd")</label>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="CompanyName" class="col-sm-2">單位名稱</label>
+        <div class="col-sm-10">
+            <label id="CompanyName" name="GuestInfo.CompanyName">@Model.GuestInfo.CompanyName</label>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="HeadCount" class="col-sm-2">人數</label>
+        <div class="col-sm-10">
+            <input type="number" id="HeadCount" name="GuestInfo.HeadCount" class="form-control" value="@Model.GuestInfo.HeadCount" />
+        </div>
+        @for (int i = 1; i <= Model.GuestInfo.HeadCount + 3; i++)
+        {
+            if (i <= Model.GuestInfo.HeadCount)
+            {
+                <div class="form-group row">
+                    <label for="Name@(i)" class="col-sm-2">姓名</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="Name@(i)" name="GuestName.Name@(i)" value="@Model.GuestName.GetType().GetProperty($"Name{i}").GetValue(Model.GuestName)">
+                    </div>
+                    <label for="PhoneNo@(i)" class="col-sm-2">電話</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="PhoneNo@(i)" name="GuestName.PhoneNo@(i)" value="@Model.GuestName.GetType().GetProperty($"PhoneNo{i}").GetValue(Model.GuestName)">
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="form-group row">
+                    <label for="Name@(i)" class="col-sm-2">姓名</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="Name@(i)" name="GuestName.Name@(i)" placeholder="輸入姓名">
+                    </div>
+                    <label for="PhoneNo@(i)" class="col-sm-2">電話</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="PhoneNo@(i)" name="GuestName.PhoneNo@(i)" placeholder="輸入電話">
+                    </div>
+                </div>
+            }
+        }
+        <label for="PCNumber" class="col-sm-2">攜帶電腦數量</label>
+        <div class="col-sm-10">
+            <input type="number" id="PCNumber" name="GuestInfo.PCNumber" class="form-control" value="@Model.GuestInfo.PCNumber" />
+        </div>
+        <label for="PhoneNumber" class="col-sm-2">攜帶手機數量</label>
+        <div class="col-sm-10">
+            <input type="number" id="PhoneNumber" name="GuestInfo.PhoneNumber" class="form-control" value="@Model.GuestInfo.PhoneNumber" />
+        </div>
+        <label for="Other3CNumber" class="col-sm-2">其他3C數量</label>
+        <div class="col-sm-10">
+            <input type="number" id="Other3CNumber" name="GuestInfo.Other3CNumber" class="form-control" value="@Model.GuestInfo.Other3CNumber" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="Construction" class="col-sm-2">施工區域</label>
+        <div class="col-sm-10">
+            <label id="Construction" name="GuestInfo.Construction">@Model.GuestInfo.Construction</label>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="MeetingRoom" class="col-sm-2">會議室</label>
+        <div class="col-sm-10">
+            <label id="MeetingRoom" name="GuestInfo.MeetingRoom">@Model.GuestInfo.MeetingRoom</label>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="Remark" class="col-sm-2">備註</label>
+        <div class="col-sm-10">
+            <label id="Remark" name="GuestInfo.Remark">@Model.GuestInfo.Remark</label>
+        </div>
+    </div>
+    @if (Model.GuestInfo.EntryTime != default(DateTime) && Model.GuestInfo.LeaveTime != default(DateTime))
+    {
+        <div class="form-group row">
+            <label for="EntryTime" class="col-sm-2">入廠時間</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="EntryTime" name="GuestInfo.EntryTime" value="@Model.GuestInfo.EntryTime" readonly>
+            </div>
+            <label for="exampleInputEmail1" class="col-sm-2">離廠時間</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="LeaveTime" name="GuestInfo.LeaveTime" value="@Model.GuestInfo.LeaveTime" readonly>
+            </div>
+        </div>
+    }
+    else if (Model.GuestInfo.EntryTime != default(DateTime))
+    {
+        <div class="form-group row">
+            <label for="EntryTime" class="col-sm-2">入廠時間</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="EntryTime" name="GuestInfo.EntryTime" value="@Model.GuestInfo.EntryTime" readonly>
+            </div>
+            <label for="exampleInputEmail1" class="col-sm-2">離廠時間</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="LeaveTime" name="GuestInfo.LeaveTime" value="@date" readonly>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="form-group row">
+            <label for="EntryTime" class="col-sm-2">入廠時間</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="EntryTime" name="GuestInfo.EntryTime" value="@date" readonly>
+            </div>
+            <label for="LeaveTime" class="col-sm-2">離廠時間</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="LeaveTime" name="GuestInfo.LeaveTime" placeholder="由警衛填寫" readonly>
+            </div>
+        </div>
+    }
+    <div class="form-group row">
+        <label for="WorkID" class="col-sm-2">工作證</label>
+        <div class="col-sm-10">
+            <label id="WorkID" name="GuestInfo.WorkID">@Model.GuestInfo.WorkID</label>
+        </div>
+    </div>
+
+    <input class="btn btn-default" type="submit" style="background-color:#C4C4C4" value="儲存" />
+</form>

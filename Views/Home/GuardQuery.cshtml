@@ -1,0 +1,84 @@
+﻿@using visitor_MVC.Models;
+@{
+    ViewBag.Title = "GuardQuery";
+    var date = ViewBag.Date;
+    List<GuestInfo> guests = ViewBag.guests;
+}
+
+<h2>GuardQuery</h2>
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+
+<h2>@date</h2>
+
+<!--顯示廠內人數框框 -->
+<style>
+    .summary-box {
+        border: 2px solid #3498db; /* 設定藍色邊框 */
+        width: 200px;
+        height: 130px;
+        float: right; /*將元素浮動到右側*/
+        margin-top: 2px; /*上邊距像素*/
+        margin-right: 10px; /*右邊距像素*/
+        padding: 10px; /*元素內容與邊框之間的內邊距像素*/
+        background-color: #ecf0f1; /* 設定淡藍色背景 */
+        box-shadow: 0px 0px 10px #888888; /* 添加陰影效果 */
+    }
+
+    .summary-item {
+        margin-bottom: 5px;
+        color: #2c3e50; /* 設定文字顏色 */
+    }
+</style>
+
+<div class="summary-box">
+    <div class="summary-item">總計外部人數: </div>
+    <div class="summary-item">訪客: </div>
+    <div class="summary-item">廠商: </div>
+    <div class="summary-item">面試: </div>
+</div>
+
+
+
+<form style="margin-left:10px;" method="post" action="/Home/GuardQuery">
+    <div class="form-group">
+        <label for="Category">來訪類別：</label>
+        <select id="Category" name="Category" class="form-control">
+            <option value="ALL">ALL</option>
+            <option value="訪客">訪客</option>
+            <option value="廠商">廠商</option>
+            <option value="面試">面試</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">查詢</button>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">來訪類別</th>
+                <th scope="col">單號</th>
+                <th scope="col">單位名稱</th>
+                <th scope="col">人員名稱</th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (GuestInfo guest in guests)
+            {
+                <tr>
+                    <th>@guest.Category</th>
+                    <th>@guest.OrderNo</th>
+                    <th>@guest.CompanyName</th>
+                    <th>@guest.Name</th>
+                    <th>@Html.ActionLink("編輯", "GuardEditGuest", new { OrderNo = guest.OrderNo })</th>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+</form>

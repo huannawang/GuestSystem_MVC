@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container">
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+    {
+        <div>
+            @Html.Label("帳號")
+            @Html.TextBox("account", null, new { @class = "form-control", required = "required" })
+        </div>
+        <br />
+        <div>
+            @Html.Label("密碼")
+            @Html.Password("password", null, new { @class = "form-control", required = "required" })
+        </div>
+        <br />
+        <label style="color: red">@TempData["ErrMsg"]</label>
+        <div>
+            <input type="submit" name="submit" value="登入" class="btn btn-primary" />
+        </div>
+    }
+</div>

@@ -1,0 +1,196 @@
+﻿
+@{
+    ViewBag.Title = "EmployeeCreateGuest";
+    var date = ViewBag.Date;
+    var IP = ViewBag.IP;
+
+}
+@model visitor_MVC.Models.Employee
+<!--RegisterTime, RegisterIP, GuardIP, WorkID-->
+
+<h2>EmployeeCreateGuest</h2>
+<h2>@date</h2>
+<h2>@IP</h2>
+
+<!--顯示部門、姓名.... -->
+<div class="form-group row">
+    <label class="col-sm-1 col-form-label">部門:</label>
+    <div class="col-sm-1">
+        <p class="form-control-plaintext">@Model.Department</p>
+    </div>
+    <label class="col-sm-1 col-form-label">部門編號:</label>
+    <div class="col-sm-1">
+        <p class="form-control-plaintext">@Model.DepartmentNo</p>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-1 col-form-label">工號:</label>
+    <div class="col-sm-1">
+        <p class="form-control-plaintext">@Model.EmployeeID</p>
+    </div>
+
+    <label class="col-sm-1 col-form-label">姓名:</label>
+    <div class="col-sm-1">
+        <p class="form-control-plaintext">@Model.EmployeeName</p>
+    </div>
+</div>
+
+<form method="post" action="/Home/EmployeeCreateGuest" onsubmit="return confirm('請確認資料正確，送出後無法修改。')">
+
+    <div class="form-group row">
+        <label for="OrderNo" class="col-sm-2">單號</label>
+        <div class="col-sm-10">
+            <input type="text" id="OrderNo" name="GuestInfo.OrderNo" class="form-control" readonly />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="FactoryArea" class="col-sm-2 col-form-label">來訪廠區</label>
+        <div class="col-sm-10">
+            <select id="FactoryArea" name="GuestInfo.FactoryArea" class="form-control">
+                <option value="科中廠">科中廠</option>
+                <option value="仁愛廠">仁愛廠</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="Category" class="col-sm-2 col-form-label">來訪類別</label>
+        <div class="col-sm-10">
+            <select id="Category" name="GuestInfo.Category" class="form-control">
+                <option value="訪客">訪客</option>
+                <option value="廠商">廠商</option>
+                <option value="面試">面試</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="ETA" class="col-sm-2">預計進廠日期</label>
+        <div class="col-sm-10">
+            <input type="date" id="ETA" name="GuestInfo.ETA" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="CompanyName" class="col-sm-2">單位名稱</label>
+        <div class="col-sm-10">
+            <input type="text" id="CompanyName" name="CompanyName" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="HeadCount" class="col-sm-2">人數</label>
+        <div class="col-sm-10">
+            <input type="number" id="HeadCount" name="GuestInfo.HeadCount" class="form-control" />
+        </div>
+    </div>
+
+    <div id="guestInfoContainer" class="form-group row">
+        <!-- 動態生成的姓名和電話輸入欄位 -->
+    </div>
+
+    <!-- 動態生成姓名和電話輸入欄位的Javascript function -->
+    <script>
+        // 當 HeadCount 更改時，動態生成姓名和電話輸入欄位
+        document.getElementById('HeadCount').addEventListener('input', function () {
+            var headCount = parseInt(this.value);
+            generateNamePhoneFields(headCount);
+        });
+
+        // 初始化頁面時生成一次
+        generateNamePhoneFields(parseInt(document.getElementById('HeadCount').value));
+
+        // 函式：根據 HeadCount 生成相應的姓名和電話輸入欄位
+        function generateNamePhoneFields(count) {
+            var container = document.getElementById('guestInfoContainer');
+            container.innerHTML = ''; // 清空容器
+
+            for (var i = 1; i <= count; i++) {
+                var rowDiv = document.createElement('div');
+                rowDiv.className = 'form-group row';
+
+                var nameLabel = document.createElement('label');
+                nameLabel.htmlFor = 'Name' + i;
+                nameLabel.className = 'col-sm-2';
+                nameLabel.innerText = '姓名';
+
+                var nameDiv = document.createElement('div');
+                nameDiv.className = 'col-sm-4';
+
+                var nameInput = document.createElement('input');
+                nameInput.type = 'text';
+                nameInput.className = 'form-control';
+                nameInput.id = 'Name' + i;
+                nameInput.name = 'GuestName.Name' + i;
+                nameInput.placeholder = '輸入姓名';
+
+                nameDiv.appendChild(nameInput);
+
+                var phoneLabel = document.createElement('label');
+                phoneLabel.htmlFor = 'PhoneNo' + i;
+                phoneLabel.className = 'col-sm-2';
+                phoneLabel.innerText = '電話';
+
+                var phoneDiv = document.createElement('div');
+                phoneDiv.className = 'col-sm-4';
+
+                var phoneInput = document.createElement('input');
+                phoneInput.type = 'text';
+                phoneInput.className = 'form-control';
+                phoneInput.id = 'PhoneNo' + i;
+                phoneInput.name = 'GuestName.PhoneNo' + i;
+                phoneInput.placeholder = '輸入電話';
+
+                phoneDiv.appendChild(phoneInput);
+
+                rowDiv.appendChild(nameLabel);
+                rowDiv.appendChild(nameDiv);
+                rowDiv.appendChild(phoneLabel);
+                rowDiv.appendChild(phoneDiv);
+
+                container.appendChild(rowDiv);
+            }
+        }
+    </script>
+
+    <div class="form-group row">
+        <label for="LicensePlateNo" class="col-sm-2">車號</label>
+        <div class="col-sm-10">
+            <input type="text" id="LicensePlateNo" name="LicensePlateNo" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <label for="PCNumber">攜帶電腦數量</label>
+            <input type="number" id="PCNumber" name="GuestInfo.PCNumber" class="form-control" />
+        </div>
+
+        <div class="col-sm-4">
+            <label for="PhoneNumber">攜帶手機數量</label>
+            <input type="number" id="PhoneNumber" name="GuestInfo.PhoneNumber" class="form-control" />
+        </div>
+
+        <div class="col-sm-4">
+            <label for="Other3CNumber">其他3C數量</label>
+            <input type="number" id="Other3CNumber" name="GuestInfo.Other3CNumber" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="Construction" class="col-sm-2">施工區域</label>
+        <div class="col-sm-10">
+            <input type="text" id="Construction" name="GuestInfo.Construction" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="MeetingRoom" class="col-sm-2">會議室</label>
+        <div class="col-sm-10">
+            <input type="text" id="MeetingRoom" name="GuestInfo.MeetingRoom" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="Remark" class="col-sm-2">備註</label>
+        <div class="col-sm-10">
+            <input type="text" id="Remark" name="GuestInfo.Remark" class="form-control" />
+        </div>
+    </div>
+
+    <input class="btn btn-default" type="submit" style="background-color:#C4C4C4" value="儲存" />
+</form>
